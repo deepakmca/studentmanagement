@@ -48,6 +48,7 @@ public class StudentServiceImpl implements StudentService {
     public String saveStudent(Student student) {
         var message = "";
         var lastIds = 1;
+
         var list = (List<Student>) repository.findAllByOrderByStudentIdDesc();
         lastIds = list.size() < 1 ? lastIds : list.get(0).getStudentId();
         if (repository.findByEmail(student.getEmail()).isEmpty()) {
