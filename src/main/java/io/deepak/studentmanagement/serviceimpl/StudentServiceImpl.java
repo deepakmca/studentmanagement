@@ -75,10 +75,12 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public List getStudentPerformance(int semester, String branchCode) {
     Map map = null;
+        Map map1 = null;
+        Map map2 = null;
+        Map map3 = null;
     var list = studentSemesterWiseMarksRepository.getMarks(semester, branchCode);
 
     int c1 =1, c2=1, c3=1, c4=1;
-    List finalList = new ArrayList();
     List localList = new ArrayList();
     for(int i=0; i < list.size(); i++){
        Map m = (Map) list.get(i);
@@ -95,39 +97,41 @@ public class StudentServiceImpl implements StudentService {
             }
             c1++;
         }else if(percentage >= 50 && percentage < 75){
-            if(map != null && map.containsValue("50-75")){
-                map.put("range", "50-75");
-                map.put("total", c2);
+            if(map1 != null && map1.containsValue("50-75")){
+                map1.put("range", "50-75");
+                map1.put("total", c2);
             }else{
-                map = new HashMap();
-                map.put("range", "50-75");
-                map.put("total", c2);
+                map1 = new HashMap();
+                map1.put("range", "50-75");
+                map1.put("total", c2);
             }
             c2++;
         }else if(percentage >= 25 && percentage < 50){
-            if(map != null && map.containsValue("25-50")){
-                map.put("range", "25-50");
-                map.put("total", c3);
+            if(map2 != null && map2.containsValue("25-50")){
+                map2.put("range", "25-50");
+                map2.put("total", c3);
             }else{
-                map = new HashMap();
-                map.put("range", "25-50");
-                map.put("total", c3);
+                map2 = new HashMap();
+                map2.put("range", "25-50");
+                map2.put("total", c3);
             }
             c3++;
         }else{
-            if(map != null && map.containsValue("0-25")){
-                map.put("range", "0-25");
-                map.put("total", c4);
+            if(map3 != null && map3.containsValue("0-25")){
+                map3.put("range", "0-25");
+                map3.put("total", c4);
             }else {
-                map = new HashMap();
-                map.put("range", "0-25");
-                map.put("total", c4);
+                map3 = new HashMap();
+                map3.put("range", "0-25");
+                map3.put("total", c4);
             }
             c4++;
         }
-        localList.add(map);
     }
-        finalList.add(localList);
-        return finalList;
+        localList.add(map);
+        localList.add(map1);
+        localList.add(map2);
+        localList.add(map3);
+        return localList;
     }
 }
